@@ -18,7 +18,7 @@ def move_circle():
     twist = Twist()
     twist.angular.z = 0.5
     twist.linear.x = 0.5
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
     r = rospy.Rate(2)
     start = time.time()
     while not rospy.is_shutdown() and time.time() - start < 15:
@@ -72,7 +72,7 @@ def move_square():
     twist = Twist()
     twist.angular.z = 0.0
     twist.linear.x = 0.0
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
     r = rospy.Rate(10)
 
     move_straight(twist, pub, r, 0.75)
@@ -94,7 +94,7 @@ def move_MShape():
     twist = Twist()
     twist.angular.z = 0.0
     twist.linear.x = 0.0
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
     r = rospy.Rate(10)
     
     move_straight(twist, pub, r, 0.75)
