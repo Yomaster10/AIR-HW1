@@ -16,8 +16,8 @@ def move_line():
 def move_circle():
     rospy.init_node('twist_publisher')
     twist = Twist()
-    twist.angular.z = 0.5
-    twist.linear.x = 0.5
+    twist.angular.z = 0.2
+    twist.linear.x = 0.2
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
     r = rospy.Rate(2)
     start = time.time()
@@ -38,12 +38,12 @@ def rotate(twist, pub, r, angle):
 
     start = rospy.get_time()
     angle_rotated = 0.0
-    while not rospy.is_shutdown() and (angle_rotated <= 1):
-        twist.angular.z = angle
+    while not rospy.is_shutdown() and (angle_rotated <= angle):
+        twist.angular.z = 0.2
         twist.linear.x = 0.0
         pub.publish(twist)
         r.sleep()
-        angle_rotated = rospy.get_time() - start 
+        angle_rotated = 0.2*(rospy.get_time() - start)
 
     twist.angular.z = 0.0
     twist.linear.x = 0.0
@@ -56,12 +56,13 @@ def move_straight(twist, pub, r, distance):
 
     start = rospy.get_time()
     distance_travelled = 0.0
-    while not rospy.is_shutdown() and (distance_travelled <= 1.0):
+
+    while not rospy.is_shutdown() and (distance_travelled <= distance):
         twist.angular.z = 0.0
-        twist.linear.x = distance
+        twist.linear.x = 0.2
         pub.publish(twist)
         r.sleep()
-        distance_travelled = rospy.get_time() - start
+        distance_travelled = 0.2*(rospy.get_time() - start)
 
     twist.angular.z = 0.0
     twist.linear.x = 0.0
@@ -115,6 +116,6 @@ def move_MShape():
 
 if __name__ == "__main__":
     #move_line()
-    #move_circle()
+    move_circle()
     #move_square()
-    move_MShape()
+    #move_MShape()
